@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#eee"
+        android:orientation="vertical" >
+        
+        <LinearLayout 
+  			android:layout_width="fill_parent"
+  			android:layout_height="45dp"
+  			android:id="@+id/title" 
+  			android:background="@drawable/title_bar"
+  			android:gravity="center_horizontal|center_vertical"  >  
+      		<TextView
+        		android:layout_width="wrap_content" 
+        		android:layout_height="wrap_content" 
+        		android:text="今日天气"
+        		android:textSize="20sp"		
+				android:textColor="#ffffff" />       
+		</LinearLayout>
+		
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="invisible"
+            android:id="@+id/weather_info_linearLayout" >"
+      		
+         	<!-- .......................................... -->
+	        <RelativeLayout      				    
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="14dp"
+	            android:gravity="center_vertical"
+	            android:clickable="true"
+	            android:background="@drawable/ic_preference_first_pressed" >
+	            <TextView
+	                android:id="@+id/weather_info_text1"
+	        		android:layout_width="wrap_content" 
+	        		android:layout_height="wrap_content"
+	        		android:layout_centerVertical="true"
+	        		android:layout_centerHorizontal="true"
+	        		android:padding="8dp" 
+	        		android:textSize="17sp"		
+					android:textColor="#000"
+					android:text="test" />     					
+	   		</RelativeLayout>
+	   		
+	        <RelativeLayout      				    
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:gravity="center_vertical"
+	            android:clickable="true"
+	            android:background="@drawable/ic_preference_normal" >
+	            <TextView
+	                android:id="@+id/weather_info_text2"
+	        		android:layout_width="wrap_content" 
+	        		android:layout_height="wrap_content"
+	        		android:layout_centerVertical="true"
+	        		android:layout_centerHorizontal="true"
+	        		android:padding="8dp" 
+	        		android:textSize="17sp"		
+					android:textColor="#000" /> 					
+	   		</RelativeLayout>
+	   		
+	        <RelativeLayout      				    
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:gravity="center_vertical"
+	            android:clickable="true"
+	            android:background="@drawable/ic_preference_normal" >
+	            <TextView
+	                android:id="@+id/weather_info_text3"
+	        		android:layout_width="wrap_content" 
+	        		android:layout_height="wrap_content"
+	        		android:layout_centerVertical="true"
+	        		android:layout_centerHorizontal="true"
+	        		android:padding="8dp" 
+	        		android:textSize="17sp"		
+					android:textColor="#000" /> 					
+	   		</RelativeLayout>
+	   		
+	        <RelativeLayout      				    
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:gravity="center_vertical"
+	            android:clickable="true"
+	            android:background="@drawable/ic_preference_normal" >
+	            <TextView
+	                android:id="@+id/weather_info_text4"
+	        		android:layout_width="wrap_content" 
+	        		android:layout_height="wrap_content"
+	        		android:layout_centerVertical="true"
+	        		android:layout_centerHorizontal="true"
+	        		android:padding="8dp" 
+	        		android:textSize="17sp"		
+					android:textColor="#000" /> 					
+	   		</RelativeLayout>
+	   		
+	        <RelativeLayout      				    
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:gravity="center_vertical"
+	            android:clickable="true"
+	            android:background="@drawable/ic_preference_last_normal" >
+	            <TextView
+	                android:id="@+id/weather_info_text5"
+	        		android:layout_width="wrap_content" 
+	        		android:layout_height="wrap_content"
+	        		android:layout_centerVertical="true"
+	        		android:layout_centerHorizontal="true"
+	        		android:padding="8dp" 
+	        		android:textSize="17sp"		
+					android:textColor="#000" /> 					
+	   		</RelativeLayout>
+        </LinearLayout>
+
+    </LinearLayout>

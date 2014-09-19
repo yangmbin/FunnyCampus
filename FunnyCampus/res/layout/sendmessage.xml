@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#eee"
+    android:orientation="vertical" 
+    android:gravity="center_horizontal">
+    <RelativeLayout 
+        android:id="@+id/send_message_top_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/title_bar">
+        <Button
+            android:id="@+id/send_message_reback_btn"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="返回"
+            android:textSize="14sp"
+            android:textColor="#fff"
+            android:background="@drawable/title_btn_back" 
+            android:onClick="sendMessage_back"/>   
+        <Button 
+		    android:id="@+id/right_send_message_btn"
+		    android:layout_width="70dp" 
+       		android:layout_height="wrap_content"
+       		android:layout_alignParentRight="true" 
+       		android:layout_centerVertical="true"
+       		android:layout_marginRight="5dp"
+			android:background="@drawable/title_btn_right"
+			android:text="发送"
+			android:textColor="#fff"
+			android:textSize="14sp"
+			android:onClick="rightSendMessageBtn"
+		/>    
+    </RelativeLayout>
+
+	<EditText
+	    android:id="@+id/send_message_edit"
+	    android:layout_width="fill_parent"
+	    android:layout_height="180dp"
+	    android:layout_below="@+id/send_message_top_layout"
+	    android:layout_marginLeft="10dp"
+	    android:layout_marginRight="10dp"
+	    android:layout_marginTop="15dp"
+	    android:background="@drawable/login_edit_normal"
+	    android:hint="分享新鲜事儿…"
+	    android:textColor="#000"
+	    android:textSize="15sp"
+	    android:inputType="textMultiLine"
+	    android:gravity="left|top" />"
+
+		<requestFocus />
+</RelativeLayout>
