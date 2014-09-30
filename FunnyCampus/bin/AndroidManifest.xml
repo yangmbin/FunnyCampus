@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.yangmbin.funnycampus"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="15" />
+    <!-- 添加网络权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.NoTitleBar" >
+        <activity
+            android:name="com.funnycampus.ui.AppStart"
+            android:label="趣味校园" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <!-- 启动页面的activity -->
+        <activity android:name="com.funnycampus.ui.Welcome" />
+        <!-- 登录页面的activity -->
+        <activity android:name="com.funnycampus.ui.Login" />
+        <!-- 登录加载页面的activity -->
+        <activity android:name="com.funnycampus.ui.LoadingActivity"
+            android:theme="@style/MyDialogStyle" />
+        <!-- 主页面的activity -->
+        <activity android:name="com.funnycampus.ui.MainPage" />
+        <!-- 注册页面的activity -->
+        <activity android:name="com.funnycampus.ui.Register" />
+        <!-- 按下返回键出现的activity -->
+        <activity android:name="com.funnycampus.ui.Exit" 
+            android:theme="@style/MyDialogStyle" />
+        <!-- 发布校园消息的activity -->
+        <activity android:name="com.funnycampus.ui.SendMessage" />
+        <!-- 近期新闻列表的activity -->
+        <activity android:name="com.funnycampus.ui.RecentNewsList" />
+        <!-- 新闻详情的activity -->
+        <activity android:name="com.funnycampus.ui.DetailNews" />
+        <!-- 选择城市的activity -->
+        <activity android:name="com.funnycampus.ui.ChooseCity" />
+        <!-- 显示城市天气的activity -->
+        <activity android:name="com.funnycampus.ui.WeatherInfo" />
+        <!-- 搜索图书和显示的activity -->
+        <activity android:name="com.funnycampus.ui.SearchBook" />
+        
+    </application>
+
+</manifest>
