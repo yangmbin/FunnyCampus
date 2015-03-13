@@ -7,10 +7,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.View;
 import android.widget.Toast;
 
 import com.funnycampus.userDefined.NewsTextView;
 import com.yangmbin.funnycampus.R;
+import com.yangmbin.funnycampus.R.anim;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -32,6 +35,7 @@ public class DetailNews extends Activity {
         link = intent.getStringExtra("link");
         
         startActivity(new Intent(DetailNews.this, LoadingActivity.class));
+        overridePendingTransition(anim.right_to_mid, anim.mid_to_left);
         new LoadingNewsOperation().execute();
     }  
     
@@ -108,7 +112,7 @@ public class DetailNews extends Activity {
 					
 					HashMap<String, String> map3 = new HashMap<String, String>();
 					map3.put("type", "imgText");
-					map3.put("value", "[" + imgDesc.get(i) + "]");
+					map3.put("value", imgDesc.get(i));
 					result.add(map3);
 				}
 			}
@@ -133,4 +137,22 @@ public class DetailNews extends Activity {
 			super.onPostExecute(result);
 		}
 	}
+	
+	//重写返回键
+  	@Override
+  	public boolean onKeyDown(int keyCode, KeyEvent event) {
+  		if (keyCode == KeyEvent.KEYCODE_BACK) {
+  			finish();
+  			overridePendingTransition(anim.left_to_mid, anim.mid_to_right);
+ 		
+  			return true;
+  		}
+  		return super.onKeyDown(keyCode, event);
+  	}
+  	
+    //左上角返回按钮
+  	public void BtnBack(View v) {
+  		finish();
+  		overridePendingTransition(anim.left_to_mid, anim.mid_to_right);
+  	}
 }

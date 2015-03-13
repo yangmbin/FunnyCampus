@@ -1,6 +1,7 @@
 package com.funnycampus.ui;
 
 import com.yangmbin.funnycampus.R;
+import com.yangmbin.funnycampus.R.anim;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -24,7 +25,7 @@ public class Welcome extends Activity {
       	Intent intent = new Intent();
 		intent.setClass(Welcome.this,Login.class);
 		startActivity(intent);
-		//this.finish();
+		overridePendingTransition(anim.right_to_mid, anim.mid_to_left);
     }  
 	
 	//×¢²áÌø×ª
@@ -32,7 +33,7 @@ public class Welcome extends Activity {
       	Intent intent = new Intent();
 		intent.setClass(Welcome.this, Register.class);
 		startActivity(intent);
-		//this.finish();
+		overridePendingTransition(anim.right_to_mid, anim.mid_to_left);
     }
     
 	/*

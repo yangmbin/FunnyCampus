@@ -1650,12 +1650,22 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		void onSmoothScrollFinished();
 	}
 	
+	//判断listview的头和尾是否是可见的，用来判断是上拉或是下拉
 	public boolean isHeaderShown() {
         return getHeaderLayout().isShown();
     }
-
     public boolean isFooterShown() {
         return getFooterLayout().isShown();
+    }
+    
+    /*
+     * 实现点击按钮实现下拉刷新，需要State.RELEASE_TO_REFRESH和mIsBeingDragged
+     */
+    public boolean isBeingDraggedToTrue() {
+    	if (!mIsBeingDragged)
+    		mIsBeingDragged = true;
+    	mState = State.RELEASE_TO_REFRESH;
+    	return mIsBeingDragged;
     }
 
 }

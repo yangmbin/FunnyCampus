@@ -5,19 +5,27 @@
         android:background="#eee"
         android:orientation="vertical" >
         
-        <LinearLayout 
-  			android:layout_width="fill_parent"
-  			android:layout_height="45dp"
-  			android:id="@+id/title" 
-  			android:background="@drawable/title_bar"
-  			android:gravity="center_horizontal|center_vertical"  >  
-      		<TextView
-        		android:layout_width="wrap_content" 
-        		android:layout_height="wrap_content" 
-        		android:text="今日天气"
-        		android:textSize="20sp"		
-				android:textColor="#ffffff" />       
-		</LinearLayout>
+        <RelativeLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="45dp"
+	        android:layout_alignParentTop="true"
+	        android:background="@drawable/title_bar">
+	        <Button
+	            android:background="@drawable/title_btn_back" 
+	            android:layout_width="wrap_content" 
+	            android:layout_height="wrap_content" 
+	            android:layout_marginLeft="10.0dip"
+	            android:layout_centerVertical="true" 
+	            android:onClick="BtnBack" />
+	        
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_centerInParent="true"
+	            android:textSize="18sp"
+	            android:textColor="#ffffff"
+	            android:text="今日天气"/>  
+   		 </RelativeLayout>
 		
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,7 +41,7 @@
 	            android:layout_marginTop="14dp"
 	            android:gravity="center_vertical"
 	            android:clickable="true"
-	            android:background="@drawable/ic_preference_first_pressed" >
+	            android:background="@drawable/ic_preference_pressed" >
 	            <TextView
 	                android:id="@+id/weather_info_text1"
 	        		android:layout_width="wrap_content" 
@@ -102,7 +110,7 @@
 	            android:layout_height="wrap_content"
 	            android:gravity="center_vertical"
 	            android:clickable="true"
-	            android:background="@drawable/ic_preference_last_normal" >
+	            android:background="@drawable/ic_preference_normal" >
 	            <TextView
 	                android:id="@+id/weather_info_text5"
 	        		android:layout_width="wrap_content" 

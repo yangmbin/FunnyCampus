@@ -1,6 +1,7 @@
 package com.funnycampus.ui;
 
 import com.yangmbin.funnycampus.R;
+import com.yangmbin.funnycampus.R.anim;
 
 import android.app.Activity;
 import android.content.Context;
@@ -30,9 +31,10 @@ public class AppStart extends Activity {
 					infoDB.execSQL("drop table if exists user");
 					infoDB.execSQL("create table user(id integer primary key, name text, nickname text, headimg text)");
 					infoDB.execSQL("insert into user(id, name, nickname, headimg) values(1, \"NULL\", \"NULL\", \"NULL\")");
+					infoDB.execSQL("insert into user(id, name, nickname, headimg) values(2, \"NULL\", \"NULL\", \"NULL\")");
 					infoDB.close();
 					
-					Toast.makeText(AppStart.this, "数据库建立成功", Toast.LENGTH_SHORT).show();
+					//Toast.makeText(AppStart.this, "数据库建立成功", Toast.LENGTH_SHORT).show();
 				}
 				catch(Exception e) {
 					Toast.makeText(AppStart.this, "数据库建立异常", Toast.LENGTH_SHORT).show();
@@ -41,6 +43,7 @@ public class AppStart extends Activity {
 				//页面跳转
 				Intent intent = new Intent(AppStart.this, Welcome.class);
 				startActivity(intent);
+				overridePendingTransition(anim.right_to_mid, anim.mid_to_left);
 				AppStart.this.finish();
 			}
 		}, 1500);

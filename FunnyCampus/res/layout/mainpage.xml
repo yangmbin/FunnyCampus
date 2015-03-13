@@ -1,142 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/mainpage"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >  
-
-    <RelativeLayout
-        android:id="@+id/main_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        android:background="@drawable/bottom_bar"
-        >             
-      
-        <ImageView
-        	android:id="@+id/img_tab_now"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"        	     	
-        	android:scaleType="matrix"
-        	android:layout_gravity="bottom"            	
-            android:layout_alignParentBottom="true"
-        	android:src="@drawable/tab_bg" />              
-         
-         
-         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:paddingBottom="2dp"            
-        	>
-        	
-            <LinearLayout
-                
-            	android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-              	android:gravity="center_horizontal"
-              	android:orientation="vertical"
-              	android:layout_weight="1"
-              	android:id="@+id/img_school_linearlayout" >"
-                <ImageView
-            		android:id="@+id/img_school"
-        			android:layout_width="wrap_content"
-        			android:layout_height="wrap_content"        	     	
-        			android:scaleType="matrix"
-        			android:clickable="true"
-        			android:src="@drawable/tab_school_pressed" />
-                <TextView
-            		android:layout_width="wrap_content"
-            		android:layout_height="wrap_content"
-            		android:text="校园"
-            		android:textColor="#fff"
-            		android:textSize="12sp" />                
-        	 </LinearLayout>
-        	 <LinearLayout
-            	android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-              	android:gravity="center_horizontal"
-              	android:orientation="vertical"
-              	android:layout_weight="1"
-              	android:id="@+id/img_message_linearlayout" >               	
-                <ImageView
-            		android:id="@+id/img_message"
-        			android:layout_width="wrap_content"
-        			android:layout_height="wrap_content"        	     	
-        			android:scaleType="matrix"
-        			android:clickable="true"
-        			android:src="@drawable/tab_mysysu_normal" />
-                <TextView
-            		android:layout_width="wrap_content"
-            		android:layout_height="wrap_content"
-            		android:text="我的中大"
-            		android:textColor="#fff"
-            		android:textSize="12sp" />                
-        	 </LinearLayout>
-        	 <LinearLayout
-            	android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-              	android:gravity="center_horizontal"
-              	android:orientation="vertical"
-              	android:layout_weight="1"
-              	android:id="@+id/img_friends_linearlayout" >               	
-                <ImageView
-            		android:id="@+id/img_friends"
-        			android:layout_width="wrap_content"
-        			android:layout_height="wrap_content"        	     	
-        			android:scaleType="matrix"
-        			android:clickable="true"
-        			android:src="@drawable/tab_study_normal" />
-                <TextView
-            		android:layout_width="wrap_content"
-            		android:layout_height="wrap_content"
-            		android:text="学习生活"
-            		android:textColor="#fff"
-            		android:textSize="12sp" />                
-        	 </LinearLayout>
-        	 
-        	 <LinearLayout
-            	android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-              	android:gravity="center_horizontal"
-              	android:orientation="vertical"
-              	android:layout_weight="1"
-              	android:id="@+id/img_me_linearlayout" >               	
-                <ImageView
-            		android:id="@+id/img_me"
-        			android:layout_width="wrap_content"
-        			android:layout_height="wrap_content"        	     	
-        			android:scaleType="matrix"
-        			android:clickable="true"
-        			android:src="@drawable/tab_me_normal" />
-                <TextView
-            		android:layout_width="wrap_content"
-            		android:layout_height="wrap_content"
-            		android:text="我"
-            		android:textColor="#fff"
-            		android:textSize="12sp" />                
-        	 </LinearLayout>        
-          
-        </LinearLayout>     
-       
-    </RelativeLayout>
-    <LinearLayout
-        android:layout_width="fill_parent"
-    	android:layout_height="wrap_content" 
-    	android:layout_alignParentTop="true"
-    	android:layout_above="@id/main_bottom"       
-        android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:id="@+id/mainpage" 
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent" >
+    
+    <RelativeLayout 
+        android:orientation="vertical" 
+        android:id="@+id/main_bottom" 
+        android:background="@drawable/bottom_bar" 
+        android:layout_width="fill_parent" 
+        android:layout_height="55.0dip" 
+        android:layout_alignParentBottom="true" >
         
-        <android.support.v4.view.ViewPager
-        	android:id="@+id/tabpager"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:layout_gravity="center" > 
-        </android.support.v4.view.ViewPager>  
+        <ImageView 
+            android:layout_gravity="bottom" 
+            android:id="@+id/img_tab_now" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:src="@drawable/tab_bg" 
+            android:scaleType="matrix" 
+            android:layout_alignParentBottom="true" />
+        <LinearLayout 
+            android:paddingBottom="2.0dip" 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:layout_alignParentBottom="true">
+            <LinearLayout 
+                android:gravity="center_horizontal" 
+                android:orientation="vertical" 
+                android:id="@+id/img_school_linearlayout" 
+                android:clickable="true" 
+                android:layout_width="fill_parent" 
+                android:layout_height="wrap_content" 
+                android:layout_weight="1.0">
+                <ImageView 
+                    android:id="@+id/img_school" 
+                    android:clickable="true" 
+                    android:layout_width="wrap_content" 
+                    android:layout_height="wrap_content" 
+                    android:src="@drawable/tab_home_pressed" 
+                    android:scaleType="matrix" />
+                <TextView 
+                    android:textSize="11.0sp" 
+                    android:textColor="#ff7f7f7f" 
+                    android:id="@+id/text_school" 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" 
+                    android:text="主页" />
+            </LinearLayout>
+            <LinearLayout 
+                android:gravity="center_horizontal" 
+                android:orientation="vertical" 
+                android:id="@+id/img_message_linearlayout" 
+                android:clickable="true" 
+                android:layout_width="fill_parent" 
+                android:layout_height="wrap_content" 
+                android:layout_weight="1.0">
+                <ImageView android:id="@+id/img_message" 
+                    android:clickable="true" 
+                    android:layout_width="wrap_content" 
+                    android:layout_height="wrap_content" 
+                    android:src="@drawable/tab_information_normal" 
+                    android:scaleType="matrix" />
+                <TextView 
+                    android:textSize="11.0sp" 
+                    android:textColor="#ff7f7f7f" 
+                    android:id="@+id/text_message" 
+                    android:layout_width="wrap_content" 
+                    android:layout_height="wrap_content" 
+                    android:text="资讯" />
+            </LinearLayout>
+            <LinearLayout 
+                android:gravity="center_horizontal" 
+                android:orientation="vertical" 
+                android:id="@+id/img_friends_linearlayout" 
+                android:clickable="true" 
+                android:layout_width="fill_parent" 
+                android:layout_height="wrap_content" 
+                android:layout_weight="1.0">
+                <ImageView 
+                    android:id="@+id/img_friends" 
+                    android:clickable="true" 
+                    android:layout_width="wrap_content" 
+                    android:layout_height="wrap_content" 
+                    android:src="@drawable/tab_discovery_normal" 
+                    android:scaleType="matrix" />
+                <TextView 
+                    android:textSize="11.0sp" 
+                    android:textColor="#ff7f7f7f" 
+                    android:id="@+id/text_friends" 
+                    android:layout_width="wrap_content" 
+                    android:layout_height="wrap_content" 
+                    android:text="发现" />
+            </LinearLayout>
+            <LinearLayout 
+                android:gravity="center_horizontal" 
+                android:orientation="vertical" 
+                android:id="@+id/img_me_linearlayout" 
+                android:clickable="true" 
+                android:layout_width="fill_parent" 
+                android:layout_height="wrap_content" 
+                android:layout_weight="1.0">
+                <ImageView 
+                    android:id="@+id/img_me" 
+                    android:clickable="true" 
+                    android:layout_width="wrap_content" 
+                    android:layout_height="wrap_content" 
+                    android:src="@drawable/tab_me_normal" 
+                    android:scaleType="matrix" />
+                <TextView 
+                    android:textSize="11.0sp" 
+                    android:textColor="#ff7f7f7f" 
+                    android:id="@+id/text_me" 
+                    android:layout_width="wrap_content" 
+                    android:layout_height="wrap_content" 
+                    android:text="我" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+    <LinearLayout 
+        android:orientation="vertical" 
+        android:background="#ffeeeeee" 
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content" 
+        android:layout_above="@id/main_bottom" 
+        android:layout_alignParentTop="true">
+        <android.support.v4.view.ViewPager 
+            android:layout_gravity="center" 
+            android:id="@+id/tabpager" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />
     </LinearLayout>
-
-   
-
 </RelativeLayout>

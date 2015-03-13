@@ -4,19 +4,24 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import com.funnycampus.XMPPUtils.XMPPUtils;
 import com.funnycampus.socket.CurrUser;
 import com.funnycampus.socket.IP_PORT;
 import com.funnycampus.socket.LoginMSG;
 import com.yangmbin.funnycampus.R;
+import com.yangmbin.funnycampus.R.anim;
 
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.MutableContextWrapper;
 import android.database.sqlite.SQLiteDatabase;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
@@ -27,6 +32,8 @@ public class Login extends Activity {
 	private EditText mUser; // 帐号编辑框
 	private EditText mPassword; // 密码编辑框
 
+	private boolean Login_xmpp_state = false;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,40 +42,14 @@ public class Login extends Activity {
         setContentView(R.layout.login);
         
         mUser = (EditText)findViewById(R.id.login_user_edit);
-        mPassword = (EditText)findViewById(R.id.login_passwd_edit);
-        
+        mPassword = (EditText)findViewById(R.id.login_passwd_edit);     
     }
 
     
     public void login_mainpage(View v) {
-    	/*
-    	if("buaa".equals(mUser.getText().toString()) && "123".equals(mPassword.getText().toString()))   //判断 帐号和密码
-        {
-             Intent intent = new Intent();
-             intent.setClass(Login.this,LoadingActivity.class);
-             startActivity(intent);
-             //Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
-          }
-        else if("".equals(mUser.getText().toString()) || "".equals(mPassword.getText().toString()))   //判断 帐号和密码
-        {
-        	new AlertDialog.Builder(Login.this)
-			.setIcon(getResources().getDrawable(R.drawable.login_error_icon))
-			.setTitle("登录错误")
-			.setMessage("微信帐号或者密码不能为空，\n请输入后再登录！")
-			.create().show();
-         }
-        else{
-           
-        	new AlertDialog.Builder(Login.this)
-			.setIcon(getResources().getDrawable(R.drawable.login_error_icon))
-			.setTitle("登录失败")
-			.setMessage("微信帐号或者密码不正确，\n请检查后重新输入！")
-			.create().show();
-        }
-        */
-    	
     	//进度条
     	startActivity(new Intent(Login.this, LoadingActivity.class));
+    	overridePendingTransition(anim.right_to_mid, anim.mid_to_left);
     	//登录按钮
       	LoginOperation loginOperation = new LoginOperation();
       	loginOperation.execute();
@@ -112,6 +93,10 @@ public class Login extends Activity {
 			} catch(Exception e) {
 				result = "CONNECT_ERROR";
 			}
+			
+			//向openfire登录
+			if (result.substring(0, 7).equals("SUCCESS"))
+				Login_xmpp_state = XMPPUtils.getInstance().login(name, pass);
 			return result;
 		}
 		
@@ -128,8 +113,7 @@ public class Login extends Activity {
 			else if(result.equals("CONNECT_ERROR")) {
 				Toast.makeText(Login.this, "连接服务器失败！", Toast.LENGTH_SHORT).show();
 			}
-			else {			
-				startActivity(new Intent(Login.this, MainPage.class));
+			else if(result.substring(0, 7).equals("SUCCESS") && Login_xmpp_state){											
 				//记住当前用户
 				//CurrUser.name = mUser.getText().toString();
 				try {
@@ -142,13 +126,27 @@ public class Login extends Activity {
 					infoDB.execSQL("update user set name=" + "'" + name + "'" + "where id=1");
 					infoDB.execSQL("update user set nickname=" + "'" + nickname + "'" + "where id=1");
 					infoDB.execSQL("update user set headimg=" + "'" + headimg + "'" + "where id=1");
+					infoDB.execSQL("update user set name=" + "'" + mPassword.getText().toString() + "'" + "where id=2");
 					infoDB.close();
-					Toast.makeText(Login.this, "更新成功", Toast.LENGTH_SHORT).show();
+					//Toast.makeText(Login.this, "更新成功", Toast.LENGTH_SHORT).show();
 				}
 				catch(Exception e) {} 
+		
 				
-				finish();
 				Toast.makeText(Login.this, "登录成功！", Toast.LENGTH_SHORT).show();
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				startActivity(new Intent(Login.this, MainPage.class));
+				overridePendingTransition(anim.right_to_mid, anim.mid_to_left);
+				finish();
+				
+			}
+			else {
+				Toast.makeText(Login.this, "登录失败！", Toast.LENGTH_SHORT).show();
 			}
 			
 			super.onPostExecute(result);
@@ -158,6 +156,18 @@ public class Login extends Activity {
     
     public void login_back(View v) {     //标题栏 返回按钮
       	this.finish();
+      	overridePendingTransition(anim.left_to_mid, anim.mid_to_right);
     }  
+    //重写返回键
+  	@Override
+  	public boolean onKeyDown(int keyCode, KeyEvent event) {
+  		if (keyCode == KeyEvent.KEYCODE_BACK) {
+  			finish();
+  			overridePendingTransition(anim.left_to_mid, anim.mid_to_right);
+ 		
+  			return true;
+  		}
+  		return super.onKeyDown(keyCode, event);
+  	}
     
 }

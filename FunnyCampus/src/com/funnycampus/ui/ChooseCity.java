@@ -3,6 +3,7 @@ package com.funnycampus.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import com.funnycampus.static_data.CityCode;
 import com.yangmbin.funnycampus.R;
+import com.yangmbin.funnycampus.R.anim;
 
 public class ChooseCity extends Activity {
 	private Spinner province;
@@ -119,5 +121,24 @@ public class ChooseCity extends Activity {
 		intent.putExtras(bundle);
 		
 		startActivity(intent);
+		overridePendingTransition(anim.right_to_mid, anim.mid_to_left);
 	}
+	
+	//重写返回键
+  	@Override
+  	public boolean onKeyDown(int keyCode, KeyEvent event) {
+  		if (keyCode == KeyEvent.KEYCODE_BACK) {
+  			finish();
+  			overridePendingTransition(anim.left_to_mid, anim.mid_to_right);
+ 		
+  			return true;
+  		}
+  		return super.onKeyDown(keyCode, event);
+  	}
+  	
+  	//左上角返回按钮
+  	public void BtnBack(View v) {
+  		finish();
+  		overridePendingTransition(anim.left_to_mid, anim.mid_to_right);
+  	}
 }

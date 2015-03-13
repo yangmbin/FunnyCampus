@@ -9,10 +9,17 @@
         android:targetSdkVersion="15" />
     <!-- 添加网络权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 添加写SD卡权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/> 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION"/>
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/icon"
+        android:icon="@drawable/deskicon1"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.NoTitleBar" >
         <activity
@@ -50,8 +57,33 @@
         <!-- 显示城市天气的activity -->
         <activity android:name="com.funnycampus.ui.WeatherInfo" />
         <!-- 搜索图书和显示的activity -->
-        <activity android:name="com.funnycampus.ui.SearchBook" />
+        <activity android:name="com.funnycampus.ui.SearchBook"
+                  android:windowSoftInputMode="stateHidden" />
+        <!-- 被窗口化的上部按钮菜单的activity -->
+        <activity android:name="com.funnycampus.ui.HomePopDialog"
+            android:theme="@style/MyDialogStyleTop" />
+        <!-- 主页分享内容的详细信息的activity -->
+        <activity android:name="com.funnycampus.ui.HomeDetailMessage" />
+        <!-- 好友列表activity -->
+        <activity android:name="com.funnycampus.ui.MyFriendsListActivity" />
+        <!-- 气泡聊天activity -->
+        <activity android:name="com.funnycampus.ui.ChatListActivity"
+            	  android:windowSoftInputMode="stateHidden" />
+        <!-- 添加好友和私信的activity -->
+        <activity android:name="com.funnycampus.ui.AddFriendAndChatDialog"
+            android:theme="@style/MyDialogStyle" />
+        <!-- 消息中心activity -->
+        <activity android:name="com.funnycampus.ui.MessageCenter" />
+        <!-- 周围的人activity -->
+        <activity android:name="com.funnycampus.ui.PeopleAround" />
         
+        <!-- 发送位置信息的service -->
+        <service android:name="com.funnycampus.service.SendLocationInfoService">
+            <intent-filter>
+                <action android:name="com.funnycampus.service.SendLocationInfoService" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

@@ -44,8 +44,8 @@
                 android:layout_height="wrap_content"
                 android:singleLine="true"
                 android:textAppearance="?android:attr/textAppearance"
-                android:textStyle="bold"
-                android:textColor="#000000" />
+                android:textColor="#000000"
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/pull_to_refresh_sub_text"
@@ -54,7 +54,8 @@
                 android:singleLine="true"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:visibility="gone"
-                android:textColor="#000000" />
+                android:textColor="#000000"
+                android:textSize="12sp" />
         </LinearLayout>
     </FrameLayout>
 

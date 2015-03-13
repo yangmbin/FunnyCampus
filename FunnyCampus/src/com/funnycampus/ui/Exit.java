@@ -2,6 +2,7 @@ package com.funnycampus.ui;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.funnycampus.XMPPUtils.XMPPUtils;
+import com.funnycampus.service.SendLocationInfoService;
 import com.yangmbin.funnycampus.R;
 
 public class Exit extends Activity {
@@ -39,6 +42,12 @@ public class Exit extends Activity {
 	public void exitbutton0(View v) {  
     	this.finish();
     	MainPage.instance.finish(); //关闭MainPage这个Activity
+    	
+    	//关闭xmpp连接
+    	XMPPUtils.getInstance().closeConnection();
+    	
+    	//关闭service，停止间歇性向服务器更新位置信息
+    	stopService(new Intent("com.funnycampus.service.SendLocationInfoService"));
     }  
 	
 }

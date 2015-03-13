@@ -29,6 +29,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -37,6 +38,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yangmbin.funnycampus.R;
+import com.yangmbin.funnycampus.R.anim;
 
 public class SearchBook extends Activity {
 	private String inputString; //输入的搜索内容
@@ -60,6 +62,7 @@ public class SearchBook extends Activity {
 		}
 		else {
 			startActivity(new Intent(SearchBook.this, LoadingActivity.class));
+			overridePendingTransition(anim.right_to_mid, anim.mid_to_left);
 			new GetBookInfoFromDOUBAN().execute();
 		}
 	}
@@ -209,4 +212,16 @@ public class SearchBook extends Activity {
 			imageView.setImageDrawable(drawable);
 		}
 	};
+	
+	//重写返回键
+  	@Override
+  	public boolean onKeyDown(int keyCode, KeyEvent event) {
+  		if (keyCode == KeyEvent.KEYCODE_BACK) {
+  			finish();
+  			overridePendingTransition(anim.left_to_mid, anim.mid_to_right);
+ 		
+  			return true;
+  		}
+  		return super.onKeyDown(keyCode, event);
+  	}
 }

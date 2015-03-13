@@ -14,7 +14,9 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -30,6 +32,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -37,6 +42,7 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
@@ -52,8 +58,10 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.funnycampus.XMPPUtils.XMPPUtils;
 import com.funnycampus.adapter.SchoolListViewAdapter;
 import com.funnycampus.reference.Base64Coder;
+import com.funnycampus.service.SendLocationInfoService;
 import com.funnycampus.socket.IP_PORT;
 import com.funnycampus.socket.SchoolInfoMSG;
 import com.funnycampus.socket.SchoolInfoMSGList;
@@ -64,6 +72,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.yangmbin.funnycampus.R;
+import com.yangmbin.funnycampus.R.anim;
 
 public class MainPage extends Activity {
 	public static MainPage instance = null; //表示当前的activity
@@ -74,6 +83,7 @@ public class MainPage extends Activity {
 	private ImageView mTabImg; //随着页滑动的图片
 	private ImageView mTab1, mTab2, mTab3, mTab4; //底部菜单的四张图片
 	private LinearLayout mTab1_LinearLayout, mTab2_LinearLayout, mTab3_LinearLayout, mTab4_LinearLayout;
+	private TextView mTab1_TextView, mTab2_TextView, mTab3_TextView, mTab4_TextView;
 	private int currIndex; //当前页卡的编号
 	
 	private int zero = 0; //动画图片偏移量
@@ -97,6 +107,12 @@ public class MainPage extends Activity {
 	Bitmap PHOTO = null;
 	String setNickname = null;
 	
+	//保存点击条目后获取的条目内容
+	public static Map<String, Object> clickedItemData;
+	
+	//点击进行刷新
+	private boolean clickToRefresh = false;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) { 
 		super.onCreate(savedInstanceState);
@@ -110,9 +126,9 @@ public class MainPage extends Activity {
 		
 		
 		/**
-		 * 在“校园”页面进行初始化等操作
+		 * 在“主页”页面进行初始化等操作
 		 */
-		View view1 = mLi.inflate(R.layout.main_tab_school, null);
+		View view1 = mLi.inflate(R.layout.main_tab_home, null);
 		
 		//校园趣事主页面ListView数据
 		schoolListView = (PullToRefreshListView) view1.findViewById(R.id.listview_school); //获取ListView
@@ -125,7 +141,7 @@ public class MainPage extends Activity {
 			public void onRefresh(PullToRefreshBase<ListView> refreshView) {
 				// TODO Auto-generated method stub
 				//获取当前时间
-				SimpleDateFormat formatter = new SimpleDateFormat("最后更新:  " + "yyyy.MM.dd  HH:mm");     
+				SimpleDateFormat formatter = new SimpleDateFormat("最后更新: " + "yyyy.MM.dd HH:mm");     
             	Date curDate = new Date(System.currentTimeMillis());
             	String label = formatter.format(curDate);   
             	
@@ -150,29 +166,59 @@ public class MainPage extends Activity {
         schoolListViewAdapter = new SchoolListViewAdapter(this, listItems);
         schoolListView.setAdapter(schoolListViewAdapter);
         
+        //设置主页条目的监听
+        schoolListView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position,
+					long id) {
+				
+				Intent intent = new Intent(MainPage.this, HomeDetailMessage.class);
+				//获取点击条目的数据
+				clickedItemData = (Map<String, Object>) parent.getAdapter().getItem(position);
+				intent.putExtra("clickPosition", position - 1);
+				startActivity(intent);
+				overridePendingTransition(anim.right_to_mid, anim.mid_to_left);
+			}
+		});
+        
 		
         /**
-         * 对“我的中大”页面加入元素
+         * 对“资讯”页面加入元素
          */
-		View view2 = mLi.inflate(R.layout.main_tab_mysysu, null);
+		View view2 = mLi.inflate(R.layout.main_tab_information, null);
 		mysysuGridView = (GridView) view2.findViewById(R.id.mysysu_gridview);
 		//数据
 		gridItems = new ArrayList<HashMap<String, Object>>(); 
-
-		HashMap<String, Object> gridItemMap1 = new HashMap<String, Object>();
-		gridItemMap1.put("gridImg", R.drawable.sysu_logo);
-		gridItemMap1.put("gridText", "近期新闻");
-		gridItems.add(gridItemMap1);
 		
-		HashMap<String, Object> gridItemMap2 = new HashMap<String, Object>();
-		gridItemMap2.put("gridImg", R.drawable.sysu_logo);
-		gridItemMap2.put("gridText", "未实现");
-		gridItems.add(gridItemMap2);
+		HashMap<String, Object> localHashMap1 = new HashMap<String, Object>();
+	    localHashMap1.put("gridImg", R.drawable.sysu_logo);
+	    localHashMap1.put("gridText", "中大新闻");
+	    this.gridItems.add(localHashMap1);
+	    
+	    HashMap<String, Object> localHashMap2 = new HashMap<String, Object>();
+	    localHashMap2.put("gridImg", R.drawable.duanzi_logo);
+	    localHashMap2.put("gridText", "段子");
+	    this.gridItems.add(localHashMap2);
+	    
+	    HashMap<String, Object> localHashMap3 = new HashMap<String, Object>();
+	    localHashMap3.put("gridImg", R.drawable.keji_logo);
+	    localHashMap3.put("gridText", "科技");
+	    this.gridItems.add(localHashMap3);
+	    
+	    HashMap<String, Object> localHashMap4 = new HashMap<String, Object>();
+	    localHashMap4.put("gridImg", R.drawable.tiyu_logo);
+	    localHashMap4.put("gridText", "体育");
+	    this.gridItems.add(localHashMap4);
+	    
+	    HashMap<String, Object> localHashMap5 = new HashMap<String, Object>();
+	    localHashMap5.put("gridImg", R.drawable.youxi_logo);
+	    localHashMap5.put("gridText", "游戏");
+	    this.gridItems.add(localHashMap5);
 
 		//适配器
 		gridAdapter = new SimpleAdapter(this, //没什么解释  
                 gridItems, //数据来源   
-                R.layout.gridview_mysysu_item, //night_item的XML实现        
+                R.layout.gridview_information_item, //night_item的XML实现        
                 //动态数组与ImageItem对应的子项          
                 new String[] {"gridImg","gridText"},                   
                 //ImageItem的XML文件里面的一个ImageView,两个TextView ID  
@@ -190,13 +236,14 @@ public class MainPage extends Activity {
 				if(arg2 == 0) {
 					//跳转到新闻列表界面
 					startActivity(new Intent(MainPage.this, RecentNewsList.class));
+					overridePendingTransition(anim.right_to_mid, anim.mid_to_left);
 				}
 				if(arg2 == 1)
 					Toast.makeText(MainPage.this, "未实现", Toast.LENGTH_SHORT).show();
 			}
 		});
 		
-		View view3 = mLi.inflate(R.layout.main_tab_study, null);
+		View view3 = mLi.inflate(R.layout.main_tab_discovery, null);
 		
 		/**
 		 * “我”的页面的显示
@@ -282,6 +329,24 @@ public class MainPage extends Activity {
         mTab3_LinearLayout.setOnClickListener(new MyOnClickListener(2));
         mTab4_LinearLayout.setOnClickListener(new MyOnClickListener(3));
         
+        mTab1 = (ImageView)findViewById(R.id.img_school);
+        mTab2 = (ImageView)findViewById(R.id.img_message);
+        mTab3 = (ImageView)findViewById(R.id.img_friends);
+        mTab4 = (ImageView)findViewById(R.id.img_me);
+        mTab1.setOnClickListener(new MyOnClickListener(0));
+        mTab2.setOnClickListener(new MyOnClickListener(1));
+        mTab3.setOnClickListener(new MyOnClickListener(2));
+        mTab4.setOnClickListener(new MyOnClickListener(3));
+        
+        mTab1_TextView = (TextView)findViewById(R.id.text_school);
+        mTab2_TextView = (TextView)findViewById(R.id.text_message);
+        mTab3_TextView = (TextView)findViewById(R.id.text_friends);
+        mTab4_TextView = (TextView)findViewById(R.id.text_me);
+        mTab1_TextView.setOnClickListener(new MyOnClickListener(0));
+        mTab2_TextView.setOnClickListener(new MyOnClickListener(1));
+        mTab3_TextView.setOnClickListener(new MyOnClickListener(2));
+        mTab4_TextView.setOnClickListener(new MyOnClickListener(3));
+        
         
         Display currDisplay = getWindowManager().getDefaultDisplay();//获取屏幕当前分辨率
         int displayWidth = currDisplay.getWidth();
@@ -300,13 +365,13 @@ public class MainPage extends Activity {
 				Animation animation = null;
 				switch(arg0) {
 				case 0:
-					mTab1.setImageDrawable(getResources().getDrawable(R.drawable.tab_school_pressed));
+					mTab1.setImageDrawable(getResources().getDrawable(R.drawable.tab_home_pressed));
 					if (currIndex == 1) {
 						animation = new TranslateAnimation(one, 0, 0, 0);
-						mTab2.setImageDrawable(getResources().getDrawable(R.drawable.tab_mysysu_normal));
+						mTab2.setImageDrawable(getResources().getDrawable(R.drawable.tab_information_normal));
 					} else if (currIndex == 2) {
 						animation = new TranslateAnimation(two, 0, 0, 0);
-						mTab3.setImageDrawable(getResources().getDrawable(R.drawable.tab_study_normal));
+						mTab3.setImageDrawable(getResources().getDrawable(R.drawable.tab_discovery_normal));
 					}
 					else if (currIndex == 3) {
 						animation = new TranslateAnimation(three, 0, 0, 0);
@@ -314,13 +379,13 @@ public class MainPage extends Activity {
 					}
 					break;
 				case 1:
-					mTab2.setImageDrawable(getResources().getDrawable(R.drawable.tab_mysysu_pressed));
+					mTab2.setImageDrawable(getResources().getDrawable(R.drawable.tab_information_pressed));
 					if (currIndex == 0) {
 						animation = new TranslateAnimation(zero, one, 0, 0);
-						mTab1.setImageDrawable(getResources().getDrawable(R.drawable.tab_school_normal));
+						mTab1.setImageDrawable(getResources().getDrawable(R.drawable.tab_home_normal));
 					} else if (currIndex == 2) {
 						animation = new TranslateAnimation(two, one, 0, 0);
-						mTab3.setImageDrawable(getResources().getDrawable(R.drawable.tab_study_normal));
+						mTab3.setImageDrawable(getResources().getDrawable(R.drawable.tab_discovery_normal));
 					}
 					else if (currIndex == 3) {
 						animation = new TranslateAnimation(three, one, 0, 0);
@@ -328,13 +393,13 @@ public class MainPage extends Activity {
 					}
 					break;
 				case 2:
-					mTab3.setImageDrawable(getResources().getDrawable(R.drawable.tab_study_pressed));
+					mTab3.setImageDrawable(getResources().getDrawable(R.drawable.tab_discovery_pressed));
 					if (currIndex == 0) {
 						animation = new TranslateAnimation(zero, two, 0, 0);
-						mTab1.setImageDrawable(getResources().getDrawable(R.drawable.tab_school_normal));
+						mTab1.setImageDrawable(getResources().getDrawable(R.drawable.tab_home_normal));
 					} else if (currIndex == 1) {
 						animation = new TranslateAnimation(one, two, 0, 0);
-						mTab2.setImageDrawable(getResources().getDrawable(R.drawable.tab_mysysu_normal));
+						mTab2.setImageDrawable(getResources().getDrawable(R.drawable.tab_information_normal));
 					}
 					else if (currIndex == 3) {
 						animation = new TranslateAnimation(three, two, 0, 0);
@@ -345,14 +410,14 @@ public class MainPage extends Activity {
 					mTab4.setImageDrawable(getResources().getDrawable(R.drawable.tab_me_pressed));
 					if (currIndex == 0) {
 						animation = new TranslateAnimation(zero, three, 0, 0);
-						mTab1.setImageDrawable(getResources().getDrawable(R.drawable.tab_school_normal));
+						mTab1.setImageDrawable(getResources().getDrawable(R.drawable.tab_home_normal));
 					} else if (currIndex == 1) {
 						animation = new TranslateAnimation(one, three, 0, 0);
-						mTab2.setImageDrawable(getResources().getDrawable(R.drawable.tab_mysysu_normal));
+						mTab2.setImageDrawable(getResources().getDrawable(R.drawable.tab_information_normal));
 					}
 					else if (currIndex == 2) {
 						animation = new TranslateAnimation(two, three, 0, 0);
-						mTab3.setImageDrawable(getResources().getDrawable(R.drawable.tab_study_normal));
+						mTab3.setImageDrawable(getResources().getDrawable(R.drawable.tab_discovery_normal));
 					}
 					break;	
 				}	
@@ -375,7 +440,8 @@ public class MainPage extends Activity {
 			}
 		});
 		
-		
+		//启动service，间歇性向服务器更新位置信息
+		startService(new Intent("com.funnycampus.service.SendLocationInfoService"));
 		
 	} //onCreate结束
 	
@@ -391,24 +457,41 @@ public class MainPage extends Activity {
 		}
 	}
     
-    //Listview加载的异步操作
+    /**
+     * 主页Listview下拉刷新的异步操作
+     * @author Administrator
+     *
+     */
     private class GetDataTask extends AsyncTask<Void, Void, SchoolInfoMSGList> {  
 		  
         //后台处理部分  
         @Override  
         protected SchoolInfoMSGList doInBackground(Void... params) {  
-            // Simulates a background job. 
         	//从服务器返回的消息
         	SchoolInfoMSGList result = null;
         	
             try {  
-                Thread.sleep(1000);  
+                //Thread.sleep(1000);  
  	
                 //头部刷新请求
-                if(schoolListView.isHeaderShown())
-                {
+                if(schoolListView.isHeaderShown() || clickToRefresh)
+                {     	
+                	//表示现在的topTitle的String
+                	String topTitle = ((TextView) findViewById(R.id.top_title_4)).getText().toString();
+                	//表示现在的topTitle的number
+                	int i = 1;
+                	
+                	if (topTitle.equals("校园趣事"))
+                		i = 1;
+                	else if (topTitle.equals("校园新闻"))
+                		i = 2;
+                	else if (topTitle.equals("社团活动"))
+                		i = 3;
+                	else if (topTitle.equals("校园讲座"))
+                		i = 4;
+                	
                 	//请求
-                	String headRefreshMSG = "HEAD_REFRESH";
+                	String headRefreshMSG = "HEAD_REFRESH" + i;
          	
                 	//创建Socket，连接到服务器
     				Socket client = new Socket(IP_PORT.IP, IP_PORT.PORT);
@@ -448,10 +531,11 @@ public class MainPage extends Activity {
         	}
         	else {
         		list = result.getList();
-        		if(schoolListView.isHeaderShown()) {
+        		if(schoolListView.isHeaderShown() || clickToRefresh) {
     	            //在头部增加新添内容     
         			listItems.clear();
             		for(int i = list.size() - 1; i >= 0; i--)
+            			
             		{
     	    			Map<String, Object> map = new HashMap<String, Object>(); 
     	    			if(list.get(i).getHeadIMG().equals("NULL"))
@@ -467,6 +551,31 @@ public class MainPage extends Activity {
     	    	        map.put("name", list.get(i).getNickname());   
     	    	        map.put("content", list.get(i).getContent());
     	    	        map.put("time", list.get(i).getTime());
+    	    	        
+    	    	        //添加三张分享的图片
+    	    	        List<String> photos = list.get(i).getPhotos();
+    	    	        for(int j = 0; j < photos.size(); j++) {
+    	    	        	if(photos.get(j).equals("NULL")) {
+    	    	        		map.put("sharedimg" + (j + 1), null);
+    	    	        	}
+    	    	        	else {
+    	    	        		byte[] tempb = Base64Coder.decodeLines(photos.get(j));
+    	    	        		Bitmap dBitmap = BitmapFactory.decodeByteArray(tempb, 0, tempb.length);
+    	    	        		map.put("sharedimg" + (j + 1), dBitmap);
+    	    	        	}
+    	    	        }
+    	    	        
+    	    	        //添加新鲜事id
+    	    	        map.put("id", Integer.toString(list.get(i).getID()));
+    	    	        //姓名而非昵称
+    	    	        map.put("username", list.get(i).getName());
+    	    	        
+    	    	        //评论 赞 踩
+    	    	        map.put("commentNum", Integer.toString(list.get(i).getCommnetNum()));
+    	    	        map.put("likeNum", Integer.toString(list.get(i).getLikeNum()));
+    	    	        map.put("dislikeNum", Integer.toString(list.get(i).getDislikeNum()));
+    	    	        
+    	    	        
     	    	        listItems.addFirst(map);
             		}
 
@@ -482,6 +591,9 @@ public class MainPage extends Activity {
             schoolListViewAdapter.notifyDataSetChanged();  
             // Call onRefreshComplete when the list has been refreshed.  
             schoolListView.onRefreshComplete();  
+            
+            //完成刷新后把这个变量reset
+            clickToRefresh = false;
   
             super.onPostExecute(result);  
         }  
@@ -494,6 +606,7 @@ public class MainPage extends Activity {
     		Intent intent = new Intent();
         	intent.setClass(MainPage.this,Exit.class);
         	startActivity(intent);
+        	overridePendingTransition(anim.right_to_mid, anim.mid_to_left);
     	}
     	return false;
     }
@@ -501,6 +614,7 @@ public class MainPage extends Activity {
     //表示主页面中的“新鲜事”按钮监听函数
     public void sendMessage(View v) { 
     	startActivity(new Intent(MainPage.this, SendMessage.class));
+    	overridePendingTransition(anim.right_to_mid, anim.mid_to_left);
     }
     
    /**
@@ -509,6 +623,7 @@ public class MainPage extends Activity {
     public void GetTodayWeather(View v) {
     	//Toast.makeText(MainPage.this, "点击了今日天气", Toast.LENGTH_SHORT).show();
     	startActivity(new Intent(MainPage.this, ChooseCity.class));
+    	overridePendingTransition(anim.right_to_mid, anim.mid_to_left);
     }
     
     /**
@@ -516,6 +631,7 @@ public class MainPage extends Activity {
      */
     public void GoSearchView(View v) { 
     	startActivity(new Intent(MainPage.this, SearchBook.class));
+    	overridePendingTransition(anim.right_to_mid, anim.mid_to_left);
     }
     
     /**
@@ -533,6 +649,7 @@ public class MainPage extends Activity {
 						intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
 								"image/*");
 						startActivityForResult(intent, 1);
+						overridePendingTransition(anim.right_to_mid, anim.mid_to_left);
 					}
 				})
 				.setPositiveButton("拍照", new DialogInterface.OnClickListener() {		
@@ -543,6 +660,7 @@ public class MainPage extends Activity {
 						//下面这句指定调用相机拍照后的照片存储的路径
 						intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "userHeadImg.jpg")));
 						startActivityForResult(intent, 2);
+						overridePendingTransition(anim.right_to_mid, anim.mid_to_left);
 					}
 				})
 				.show();
@@ -569,6 +687,20 @@ public class MainPage extends Activity {
     			setPicToView(data);
     		}
     		break;
+    	//从HomePopDialog传递过来的参数，表示点击了哪一个板块
+    	case 100:
+    		if(resultCode == 101) {
+    			TextView topTitle4 = (TextView) findViewById(R.id.top_title_4);
+    			topTitle4.setText(data.getExtras().getString("title"));
+    			
+    			//新建手势进行下拉刷新
+    			clickToRefresh = true;
+    			MotionEvent event = MotionEvent.obtain(SystemClock.uptimeMillis(), 
+    					SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, 0, -200, 0);
+    			if (schoolListView.isBeingDraggedToTrue()) {
+    				schoolListView.onTouchEvent(event);			
+    			}		
+    		}
 		default:
 			break;
     	}
@@ -588,6 +720,7 @@ public class MainPage extends Activity {
         intent.putExtra("outputY", 150);  
         intent.putExtra("return-data", true);  
         startActivityForResult(intent, 3);  
+        overridePendingTransition(anim.right_to_mid, anim.mid_to_left);
     }
     /*保存裁剪之后的图片数据*/
     private void setPicToView(Intent picdata) {  
@@ -800,4 +933,59 @@ public class MainPage extends Activity {
     	}
     }
     
+    /**
+     * 主页上部分类按钮菜单
+     * @param paramView
+     */
+    public void HomeTopMenu(View paramView)
+    {
+    	startActivityForResult(new Intent(this, HomePopDialog.class), 100);
+    	overridePendingTransition(anim.right_to_mid, anim.mid_to_left);
+    }
+    
+    /**
+     * 我的好友列表
+     */
+    public void GetMyFriendsListBtn(View v) {
+    	startActivity(new Intent(MainPage.this, MyFriendsListActivity.class));
+    	overridePendingTransition(anim.right_to_mid, anim.mid_to_left);
+    }
+    
+    /**
+     * 消息中心按钮
+     */
+    public void messageCenterBtn(View v) {
+    	startActivity(new Intent(MainPage.this, MessageCenter.class));
+    	overridePendingTransition(anim.right_to_mid, anim.mid_to_left);
+    }
+    
+    /**
+     * 周围的人按钮
+     */
+    public void peopleAroundBtn(View v) {
+    	startActivity(new Intent(MainPage.this, PeopleAround.class));
+    	overridePendingTransition(anim.right_to_mid, anim.mid_to_left);
+    }
+    
+    /**
+     * 更新UI的handler，用于处理外界发送来的聊天消息
+     */
+    public static Handler handler = new Handler() {
+    	@Override
+    	public void handleMessage(Message msg) {
+    		if(msg.what == 0) {	
+    			//如果此页面没有进入过，那么更新数据集合就会出错，应该判断当
+    			//前处于哪一个activity然后再通知适配器数据集合发生了改变
+    			ActivityManager activityManager = (ActivityManager) MainPage.instance.getSystemService(Context.ACTIVITY_SERVICE);  
+    	        String runningActivity = activityManager.getRunningTasks(1).get(0).topActivity.getClassName(); 
+    			if (runningActivity.equals("com.funnycampus.ui.ChatListActivity"))
+    				ChatListActivity.chatListAdapter.notifyDataSetChanged();
+    			
+    			Toast.makeText(MainPage.instance, "收到消息！", Toast.LENGTH_SHORT).show();
+    		}
+    		else if (msg.what == 1) {
+    			Toast.makeText(MainPage.instance, "获取聊天用户信息失败！", Toast.LENGTH_SHORT).show();
+    		}
+    	}
+    };
 }

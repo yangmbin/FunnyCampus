@@ -14,11 +14,13 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.text.Html;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.funnycampus.ui.MainPage;
 import com.yangmbin.funnycampus.R;
 
 //自定义新闻的显示TextView
@@ -53,7 +55,8 @@ public class NewsTextView extends LinearLayout {
 				int imagewidth = mTypedArray.getDimensionPixelOffset(R.styleable.newsTextView_image_width, 200);  
                 int imageheight = mTypedArray.getDimensionPixelOffset(R.styleable.newsTextView_image_height, 200);  
                 ImageView imageView = new ImageView(mContext);  
-                params = new LayoutParams(imagewidth, imageheight);  
+                //params = new LayoutParams(imagewidth, imageheight); 
+                params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
                 params.gravity = Gravity.CENTER_HORIZONTAL; //居中  
                 imageView.setLayoutParams(params);  
                 //显示图片  
@@ -73,7 +76,7 @@ public class NewsTextView extends LinearLayout {
                 textView.setText(hashMap.get("value"));  
                 textView.setTextSize(textSize);     //设置字体大小  
                 textView.setTextColor(textColor);   //设置字体颜色  
-                textView.setLineSpacing(5.5f, 1f);  //设置行间距
+                textView.setLineSpacing(9.5f, 1.2f);  //设置行间距
                 addView(textView);
 			}
 			//如果是图片文字
@@ -84,8 +87,8 @@ public class NewsTextView extends LinearLayout {
                 textView.setLayoutParams(params);  
                 //textView.setText(Html.fromHtml(hashMap.get("value")));  
                 textView.setText(hashMap.get("value"));  
-                textView.setTextSize(10.0f);     //设置字体大小  
-                textView.setTextColor(Color.rgb(88, 182, 45));   //设置字体颜色  
+                textView.setTextSize(14.0f);     //设置字体大小  
+                textView.setTextColor(Color.argb(99, 0, 0, 0));   //设置字体颜色  
                 textView.setLineSpacing(5.5f, 1f);  //设置行间距
                 addView(textView);
 			}
@@ -97,7 +100,7 @@ public class NewsTextView extends LinearLayout {
             @SuppressWarnings("unchecked")  
             HashMap<String, Object> hashMap = (HashMap<String, Object>) msg.obj;  
             ImageView imageView = (ImageView) hashMap.get("imageView");  
-            LayoutParams params = new LayoutParams(msg.arg1, msg.arg2);  
+            LayoutParams params = new LayoutParams(msg.arg1, msg.arg2);
             params.gravity = Gravity.CENTER_HORIZONTAL; //居中  
             imageView.setLayoutParams(params);  
             Drawable drawable = (Drawable) hashMap.get("drawable");  
@@ -128,14 +131,20 @@ public class NewsTextView extends LinearLayout {
             try {  
                 drawable = Drawable.createFromStream(new URL(mUrl).openStream(), "image");  
                 //对图片进行缩放  
-                newImgWidth = drawable.getIntrinsicWidth();  
-                newImgHeight = drawable.getIntrinsicHeight();  
+                //newImgWidth = drawable.getIntrinsicWidth();  
+                //newImgHeight = drawable.getIntrinsicHeight();  
+                
+                //取得屏幕分辨率
+                DisplayMetrics dm = new DisplayMetrics();
+                MainPage.instance.getWindowManager().getDefaultDisplay().getMetrics(dm);
+                newImgWidth = dm.widthPixels;
+                newImgHeight = (newImgWidth / drawable.getIntrinsicWidth()) * drawable.getIntrinsicHeight();  
             } catch (Exception e) {  
                 // TODO: handle exception  
                 e.printStackTrace();  
             }  
-            //让线程休眠2秒  
-            SystemClock.sleep(2000);  
+            //让线程休眠1秒  
+            SystemClock.sleep(1000);  
             
             //使用Handler更新UI  
             Message msg = handler.obtainMessage();  

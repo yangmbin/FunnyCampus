@@ -1,68 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout   xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/linearLayout1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"        
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="#eee" >
-
-        
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center" >
-            
-            <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center" 
+    android:orientation="vertical" 
+    android:id="@+id/linearLayout1" 
+    android:background="@drawable/welcome_bg1" 
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent">
+    <LinearLayout 
+        android:gravity="center" 
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content">
+        <ImageView 
+            android:layout_width="80.0dip" 
+            android:layout_height="80.0dip" 
             android:src="@drawable/icon" />
-            
-            <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="趣味校园"
-            android:textColor="#000000"
-            android:textSize="35sp" />
-            
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/main_login_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn_style_green"
-            android:gravity="center"
-            android:paddingLeft="130dp"
-            android:paddingRight="130dp"
-            android:layout_marginTop="15dp"
-            android:text="登录"
-            android:textColor="#ffffff"
-            android:textSize="18sp"
-            android:onClick="welcome_login" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="6dp"
-            android:text=" "
-            android:textSize="14sp"
-            android:textColor="#444" />
-
-        <Button
-            android:id="@+id/main_regist_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/btn_style_white"
-            android:gravity="center"
-            android:paddingLeft="130dp"
-            android:paddingRight="130dp"
-            android:text="注册"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            android:onClick="welcome_register"  />
- 
+        <TextView 
+            android:textSize="35.0sp" 
+            android:textColor="#ff000000" 
+            android:visibility="gone" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:layout_marginLeft="10.0dip" 
+            android:text="趣味校园" />
     </LinearLayout>
+    <Button 
+        android:textSize="20.0sp" 
+        android:textColor="#ffffffff" 
+        android:gravity="center" 
+        android:id="@+id/main_login_btn" 
+        android:background="@drawable/btn_style_green" 
+        android:paddingLeft="60.0dip" 
+        android:paddingRight="60.0dip" 
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content" 
+        android:layout_marginTop="20.0dip" 
+        android:text="登录" 
+        android:onClick="welcome_login" />
+
+    <Button 
+        android:textSize="20.0sp" 
+        android:textColor="#ff000000" 
+        android:gravity="center" 
+        android:id="@+id/main_regist_btn" 
+        android:background="@drawable/btn_style_white" 
+        android:paddingLeft="60.0dip" 
+        android:paddingRight="60.0dip" 
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content" 
+        android:layout_marginTop="20.0dip" 
+        android:text="注册" 
+        android:onClick="welcome_register" />
+</LinearLayout>

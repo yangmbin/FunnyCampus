@@ -14,12 +14,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.funnycampus.static_data.CityCode;
 import com.yangmbin.funnycampus.R;
+import com.yangmbin.funnycampus.R.anim;
 
 
 
@@ -38,43 +41,30 @@ public class WeatherInfo extends Activity {
 		
 		//后台加载
 		startActivity(new Intent(WeatherInfo.this, LoadingActivity.class));
+		overridePendingTransition(anim.right_to_mid, anim.mid_to_left);
 		new GetWeatherInfo().execute();
 	}
 	
 	//获取网络数据的异步操作
-	public class GetWeatherInfo extends AsyncTask<Void, Void, String[]> {
+	public class GetWeatherInfo extends AsyncTask<Void, Void, String> {
 
 		@Override
-		protected String[] doInBackground(Void... arg0) {
+		protected String doInBackground(Void... arg0) {
 			String cityCodeString = CityCode.CDDE_CITY[province][city];
 			String cityCode = cityCodeString.substring(0, cityCodeString.indexOf("="));
 			
-			String result[] = new String[2];
+			String result = null;
 			try {
 				//HttpGet对象
 				HttpGet httpRequest0 = 
-						new HttpGet("http://www.weather.com.cn/data/sk/" + cityCode + ".html");
+						new HttpGet("http://m.weather.com.cn/data/" + cityCode + ".html");
 				//HttpClient对象
 				HttpClient httpClient0 = new DefaultHttpClient();
 				//获得HttpResponse对象
 				HttpResponse httpResponse0 = httpClient0.execute(httpRequest0);
 				if(httpResponse0.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 					//取得返回数据
-					result[0] = EntityUtils.toString(httpResponse0.getEntity());
-				}
-				
-				
-				//另一个请求
-				//HttpGet对象
-				HttpGet httpRequest1 = 
-						new HttpGet("http://www.weather.com.cn/data/cityinfo/" + cityCode + ".html");
-				//HttpClient对象
-				HttpClient httpClient1 = new DefaultHttpClient();
-				//获得HttpResponse对象
-				HttpResponse httpResponse1 = httpClient1.execute(httpRequest1);
-				if(httpResponse1.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-					//取得返回数据
-					result[1] = EntityUtils.toString(httpResponse1.getEntity());
+					result = EntityUtils.toString(httpResponse0.getEntity());
 				}
 			}
 			catch(Exception e) { 
@@ -84,7 +74,7 @@ public class WeatherInfo extends Activity {
 			return result;
 		}
 		@Override
-		protected void onPostExecute(String[] result) { 
+		protected void onPostExecute(String result) { 
 			LoadingActivity.instance.finish();
 			if(result == null) {
 				Toast.makeText(WeatherInfo.this, "加载天气失败！", Toast.LENGTH_SHORT).show();
@@ -98,21 +88,18 @@ public class WeatherInfo extends Activity {
 				textView5 = (TextView)findViewById(R.id.weather_info_text5);
 				
 				//解析JSON对象
-				JSONTokener jsonParser0 = new JSONTokener(result[0]);
-				JSONTokener jsonParser1 = new JSONTokener(result[1]);
+				JSONTokener jsonParser0 = new JSONTokener(result);
 				try {
 					JSONObject obj0 = (JSONObject)jsonParser0.nextValue();
-					JSONObject obj1 = (JSONObject)jsonParser1.nextValue();
 					
 					JSONObject obj00 = obj0.getJSONObject("weatherinfo");
-					JSONObject obj11 = obj1.getJSONObject("weatherinfo");
 					
-					textView1.setText(CityCode.PROVINCE[province] + "   " + obj11.getString("city"));
-					textView2.setText(obj11.getString("temp1") + " ~ " + obj11.getString("temp2"));
-					textView3.setText(obj11.getString("weather"));
+					textView1.setText(CityCode.PROVINCE[province] + "   " + obj00.getString("city"));
+					textView2.setText(obj00.getString("temp1"));
+					textView3.setText(obj00.getString("weather1"));
 					
-					textView4.setText(obj00.getString("WD") + "   " + obj00.getString("WS"));
-					textView5.setText("相对湿度" + "   " +  obj00.getString("SD"));
+					textView4.setText(obj00.getString("wind1"));
+					textView5.setText(obj00.getString("index_d"));
 					
 					LinearLayout linearLayout = (LinearLayout)findViewById(R.id.weather_info_linearLayout);
 					linearLayout.setVisibility(0);
@@ -123,4 +110,22 @@ public class WeatherInfo extends Activity {
 			super.onPostExecute(result);
 		}
 	}
+	
+	//重写返回键
+  	@Override
+  	public boolean onKeyDown(int keyCode, KeyEvent event) {
+  		if (keyCode == KeyEvent.KEYCODE_BACK) {
+  			finish();
+  			overridePendingTransition(anim.left_to_mid, anim.mid_to_right);
+ 		
+  			return true;
+  		}
+  		return super.onKeyDown(keyCode, event);
+  	}
+  	
+  	//左上角返回按钮
+  	public void BtnBack(View v) {
+  		finish();
+  		overridePendingTransition(anim.left_to_mid, anim.mid_to_right);
+  	}
 }

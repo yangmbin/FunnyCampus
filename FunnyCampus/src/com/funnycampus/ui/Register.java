@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -15,15 +16,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.funnycampus.XMPPUtils.XMPPUtils;
 import com.funnycampus.socket.IP_PORT;
 import com.funnycampus.socket.RegisterMSG;
 import com.yangmbin.funnycampus.R;
+import com.yangmbin.funnycampus.R.anim;
 
 public class Register extends Activity {
 	private EditText nameEditText;
 	private EditText pass1EditText;
 	private EditText pass2EditText;
 	private Button registerButton;
+	
+	private boolean Register_xmpp_state = false;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,7 @@ public class Register extends Activity {
 				
 				//进度条
 		    	startActivity(new Intent(Register.this, LoadingActivity.class));
+		    	overridePendingTransition(anim.right_to_mid, anim.mid_to_left);
 				//注册操作
 				RegisterOperation registerOperation = new RegisterOperation();
 				registerOperation.execute();
@@ -93,6 +99,10 @@ public class Register extends Activity {
 			} catch(Exception e) {
 				result = "CONNECT_ERROR";
 			}
+			
+			//向openfire注册
+			if (result.equals("SUCCESS"))
+				Register_xmpp_state = XMPPUtils.getInstance().register(name, pass1);
 			return result;
 		}
 		
@@ -114,9 +124,12 @@ public class Register extends Activity {
 			else if(result.equals("CONNECT_ERROR")) {
 				Toast.makeText(Register.this, "连接服务器失败！", Toast.LENGTH_SHORT).show();
 			}
-			else if(result.equals("SUCCESS")) {
+			else if(result.equals("SUCCESS") && Register_xmpp_state) {
 				Toast.makeText(Register.this, "注册成功！", Toast.LENGTH_SHORT).show();
 				Register.this.finish();
+			}
+			else {
+				Toast.makeText(Register.this, "注册失败！", Toast.LENGTH_SHORT).show();
 			}
 			
 			super.onPostExecute(result);
@@ -126,5 +139,17 @@ public class Register extends Activity {
 	//返回按钮
 	public void register_back(View v) {
 		this.finish();
+		overridePendingTransition(anim.left_to_mid, anim.mid_to_right);
 	}
+	//重写返回键
+  	@Override
+  	public boolean onKeyDown(int keyCode, KeyEvent event) {
+  		if (keyCode == KeyEvent.KEYCODE_BACK) {
+  			finish();
+  			overridePendingTransition(anim.left_to_mid, anim.mid_to_right);
+ 		
+  			return true;
+  		}
+  		return super.onKeyDown(keyCode, event);
+  	}
 }

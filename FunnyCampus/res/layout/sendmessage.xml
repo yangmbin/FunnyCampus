@@ -1,55 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="#eee"
+    android:gravity="center_horizontal" 
     android:orientation="vertical" 
-    android:gravity="center_horizontal">
+    android:background="#ffeeeeee" 
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent">
+    
     <RelativeLayout 
-        android:id="@+id/send_message_top_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="45dp"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/title_bar">
-        <Button
-            android:id="@+id/send_message_reback_btn"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="返回"
-            android:textSize="14sp"
-            android:textColor="#fff"
-            android:background="@drawable/title_btn_back" 
-            android:onClick="sendMessage_back"/>   
+        android:id="@+id/send_message_top_layout" 
+        android:background="@drawable/title_bar" 
+        android:layout_width="fill_parent" 
+        android:layout_height="45.0dip" 
+        android:layout_alignParentTop="true">
         <Button 
-		    android:id="@+id/right_send_message_btn"
-		    android:layout_width="70dp" 
-       		android:layout_height="wrap_content"
-       		android:layout_alignParentRight="true" 
-       		android:layout_centerVertical="true"
-       		android:layout_marginRight="5dp"
-			android:background="@drawable/title_btn_right"
-			android:text="发送"
-			android:textColor="#fff"
-			android:textSize="14sp"
-			android:onClick="rightSendMessageBtn"
-		/>    
+            android:textSize="14.0sp" 
+            android:textColor="#ffffffff"
+             android:id="@+id/send_message_reback_btn" 
+             android:background="@drawable/title_btn_back" 
+             android:layout_width="wrap_content" 
+             android:layout_height="wrap_content" 
+             android:layout_marginLeft="10.0dip" 
+             android:layout_centerVertical="true" 
+             android:onClick="sendMessage_back" />
+        <Button 
+            android:textSize="16.0sp" 
+            android:textColor="#ffeeeeee" 
+            android:id="@+id/right_send_message_btn" 
+            android:background="@drawable/title_btn_right" 
+            android:paddingLeft="8.0dip" 
+            android:paddingRight="8.0dip" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:layout_marginRight="10.0dip" 
+            android:text="发送" 
+            android:layout_alignParentRight="true" 
+            android:layout_centerVertical="true" 
+            android:onClick="rightSendMessageBtn" />
     </RelativeLayout>
-
-	<EditText
-	    android:id="@+id/send_message_edit"
-	    android:layout_width="fill_parent"
-	    android:layout_height="180dp"
-	    android:layout_below="@+id/send_message_top_layout"
-	    android:layout_marginLeft="10dp"
-	    android:layout_marginRight="10dp"
-	    android:layout_marginTop="15dp"
-	    android:background="@drawable/login_edit_normal"
-	    android:hint="分享新鲜事儿…"
-	    android:textColor="#000"
-	    android:textSize="15sp"
-	    android:inputType="textMultiLine"
-	    android:gravity="left|top" />"
-
-		<requestFocus />
+    
+    <ScrollView 
+        android:layout_width="fill_parent" 
+        android:layout_height="fill_parent" 
+        android:layout_below="@+id/send_message_top_layout">
+        <LinearLayout 
+            android:orientation="vertical" 
+            android:layout_width="fill_parent" 
+            android:layout_height="fill_parent">
+            <EditText 
+                android:textSize="15.0sp" 
+                android:textColor="#ff000000" 
+                android:gravity="top|left|center" 
+                android:id="@+id/send_message_edit" 
+                android:background="@drawable/login_edit_normal" 
+                android:layout_width="fill_parent" 
+                android:layout_height="180.0dip" 
+                android:layout_marginLeft="10.0dip" 
+                android:layout_marginTop="15.0dip" 
+                android:layout_marginRight="10.0dip" 
+                android:hint="分享新鲜事儿…" 
+                android:layout_below="@+id/send_message_top_layout" 
+                android:inputType="textMultiLine" />
+            <requestFocus />
+            <LinearLayout 
+                android:id="@+id/linearLayout1" 
+                android:layout_width="fill_parent" 
+                android:layout_height="80.0dip" 
+                android:layout_marginLeft="10.0dip" 
+                android:layout_marginTop="12.0dip" 
+                android:layout_marginRight="10.0dip" 
+                android:layout_below="@+id/send_message_edit">
+                <ImageView 
+                    android:id="@+id/first_photo" 
+                    android:background="@drawable/taken_photo" 
+                    android:clickable="true" 
+                    android:layout_width="80.0dip" 
+                    android:layout_height="80.0dip" 
+                    android:onClick="addPhotos" />
+                <ImageView 
+                    android:id="@+id/second_photo" 
+                    android:background="@drawable/taken_photo" 
+                    android:visibility="invisible" 
+                    android:clickable="false" 
+                    android:layout_width="80.0dip" 
+                    android:layout_height="80.0dip" 
+                    android:layout_marginLeft="10.0dip" 
+                    android:onClick="addPhotos" />
+                <ImageView 
+                    android:id="@+id/third_photo" 
+                    android:background="@drawable/taken_photo" 
+                    android:visibility="invisible" 
+                    android:clickable="false" 
+                    android:layout_width="80.0dip" 
+                    android:layout_height="80.0dip" 
+                    android:layout_marginLeft="10.0dip" 
+                    android:onClick="addPhotos" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

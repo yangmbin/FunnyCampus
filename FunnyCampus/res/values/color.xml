@@ -5,4 +5,14 @@
 <color name="pressed">#dcdcdc</color>
 <color name="selected">#dcdcdc</color>
 <color name="focused">#dcdcdc</color>
+
+<color name="transparent">#00000000</color>
+<color name="darkness">#de000000</color>
+<color name="cccccc">#ffcccccc</color>
+<color name="trans_while">#ffeeeeee</color>
+
+<color name="graybtn_normal">#88999999</color>
+<color name="graybtn_pressed">#cc999999</color>
+<color name="graybtn_normal1">#55999999</color>
+<color name="graybtn_pressed1">#aa999999</color>
 </resources>

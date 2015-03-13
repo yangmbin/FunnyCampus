@@ -14,6 +14,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -22,6 +23,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.yangmbin.funnycampus.R;
+import com.yangmbin.funnycampus.R.anim;
 
 public class RecentNewsList extends Activity{
 	private ListView recentNewsListView;
@@ -43,6 +45,7 @@ public class RecentNewsList extends Activity{
 		recentNewsListView.setAdapter(adapter);
 		
 		startActivity(new Intent(RecentNewsList.this, LoadingActivity.class));
+		overridePendingTransition(anim.right_to_mid, anim.mid_to_left);
 		new GetSYSUNewsList().execute();
 		
 		//对每条新闻item设置监听函数
@@ -58,6 +61,7 @@ public class RecentNewsList extends Activity{
 				Intent intent = new Intent(RecentNewsList.this, DetailNews.class);
 				intent.putExtra("link", item.get("link"));
 				startActivity(intent);
+				overridePendingTransition(anim.right_to_mid, anim.mid_to_left);
 			}
 		});
 	}
@@ -117,4 +121,22 @@ public class RecentNewsList extends Activity{
 		}
     	
     }
+    
+    //重写返回键
+  	@Override
+  	public boolean onKeyDown(int keyCode, KeyEvent event) {
+  		if (keyCode == KeyEvent.KEYCODE_BACK) {
+  			finish();
+  			overridePendingTransition(anim.left_to_mid, anim.mid_to_right);
+ 		
+  			return true;
+  		}
+  		return super.onKeyDown(keyCode, event);
+  	}
+  	
+  	//左上角返回按钮
+  	public void BtnBack(View v) {
+  		finish();
+  		overridePendingTransition(anim.left_to_mid, anim.mid_to_right);
+  	}
 }

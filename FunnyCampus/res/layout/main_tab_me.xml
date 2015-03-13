@@ -1,102 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-     android:layout_width="fill_parent"
-     android:layout_height="fill_parent"
-     android:background="#eee"
-     android:orientation="vertical" >
-     
-     <LinearLayout 
-		android:layout_width="fill_parent"
-		android:layout_height="45dp"
-		android:id="@+id/title" 
-		android:background="@drawable/title_bar"
-		android:gravity="center_horizontal|center_vertical"  >  
-   		<TextView
-     		android:layout_width="wrap_content" 
-     		android:layout_height="wrap_content" 
-     		android:text="我"
-     		android:textSize="20sp"		
-			android:textColor="#ffffff" />       
-	 </LinearLayout>
-	 
-     <!-- .................................... -->
-
-     <RelativeLayout      				    
-            android:layout_width="fill_parent"
-            android:layout_height="65dp"
-            android:layout_marginTop="14dp"
-            android:gravity="center_vertical"
-            android:clickable="true"
-            android:onClick="SetUserHeadImg"
-            android:background="@drawable/preference_first_item" >
-
-         <TextView
-             android:id="@+id/textView1"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_alignParentLeft="true"
-             android:layout_marginLeft="10dp"
-             android:layout_centerVertical="true"
-             android:textSize="18dp"
-             android:textColor="#000000"
-             android:text="头像" />
-
-         <ImageView
-             android:id="@+id/user_head_img_imageView"
-             android:layout_width="50dp"
-             android:layout_height="50dp"
-             android:layout_centerVertical="true"
-             android:layout_toLeftOf="@+id/imageView2"
-             android:src="@drawable/img_head" />
-
-         <ImageView
-             android:id="@+id/imageView2"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_alignParentRight="true"
-             android:layout_centerVertical="true"
-             android:layout_marginRight="10dp"
-             android:src="@drawable/mm_submenu" />
-         
-     </RelativeLayout>
-     
-     <RelativeLayout      				    
-            android:layout_width="fill_parent"
-            android:layout_height="45dp"
-            android:gravity="center_vertical"
-            android:clickable="true"
-            android:onClick="SetUserNickname"
-            android:background="@drawable/preference_last_item" >
-
-         <TextView
-             android:id="@+id/textView2"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_alignParentLeft="true"
-             android:layout_centerVertical="true"
-             android:layout_marginLeft="10dp"
-             android:textSize="18dp"
-             android:textColor="#000000"
-             android:text="昵称" />
-
-         <TextView
-             android:id="@+id/user_nickname_textView"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_centerVertical="true"
-             android:layout_toLeftOf="@+id/imageView3"
-             android:textSize="18dp"
-             android:text="去设置" />
-
-         <ImageView
-             android:id="@+id/imageView3"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_centerVertical="true"
-             android:layout_alignParentRight="true"
-             android:layout_marginRight="10dp"
-             android:src="@drawable/mm_submenu" />
-
-     </RelativeLayout>
-
+    android:orientation="vertical" 
+    android:background="#ffeeeeee" 
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent" >
+    <LinearLayout 
+        android:gravity="center" 
+        android:id="@+id/title" 
+        android:background="@drawable/title_bar" 
+        android:layout_width="fill_parent" 
+        android:layout_height="45.0dip">
+        <TextView 
+            android:textSize="18.0sp" 
+            android:textColor="#ff7f7f7f" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:text="我" />
+    </LinearLayout>
+    
+    <RelativeLayout 
+        android:gravity="center_vertical" 
+        android:background="@drawable/preference_item" 
+        android:clickable="true" 
+        android:layout_width="fill_parent" 
+        android:layout_height="65.0dip" 
+        android:layout_marginTop="14.0dip" 
+        android:onClick="SetUserHeadImg">
+        <TextView 
+            android:textSize="16.0sp" 
+            android:textColor="#ff000000" 
+            android:id="@+id/textView1" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:layout_marginLeft="10.0dip" 
+            android:text="头像" 
+            android:layout_alignParentLeft="true" 
+            android:layout_centerVertical="true" />
+        <ImageView 
+            android:id="@+id/user_head_img_imageView" 
+            android:layout_width="50.0dip" 
+            android:layout_height="50.0dip" 
+            android:src="@drawable/img_head" 
+            android:layout_toLeftOf="@+id/imageView2" 
+            android:layout_centerVertical="true" />
+        <ImageView 
+            android:id="@+id/imageView2" 
+            android:layout_width="15.0dip" 
+            android:layout_height="15.0dip" 
+            android:layout_marginRight="10.0dip" 
+            android:src="@drawable/mm_submenu" 
+            android:layout_alignParentRight="true" 
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+    <RelativeLayout 
+        android:gravity="center_vertical" 
+        android:background="@drawable/preference_item" 
+        android:clickable="true" 
+        android:layout_width="fill_parent" 
+        android:layout_height="45.0dip" 
+        android:onClick="SetUserNickname">
+        <TextView 
+            android:textSize="16.0sp" 
+            android:textColor="#ff000000" 
+            android:id="@+id/textView2" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:layout_marginLeft="10.0dip" 
+            android:text="昵称" 
+            android:layout_alignParentLeft="true" 
+            android:layout_centerVertical="true" />
+        <TextView 
+            android:textSize="16.0sp" 
+            android:id="@+id/user_nickname_textView" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:text="去设置" 
+            android:layout_toLeftOf="@+id/imageView3" 
+            android:layout_centerVertical="true" />
+        <ImageView 
+            android:id="@+id/imageView3" 
+            android:layout_width="15.0dip" 
+            android:layout_height="15.0dip" 
+            android:layout_marginRight="10.0dip" 
+            android:src="@drawable/mm_submenu" 
+            android:layout_alignParentRight="true" 
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
 </LinearLayout>

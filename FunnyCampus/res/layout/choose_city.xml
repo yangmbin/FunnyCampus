@@ -11,17 +11,23 @@
         android:layout_width="fill_parent"
         android:layout_height="45dp"
         android:layout_alignParentTop="true"
-        android:background="@drawable/title_bar" >
-
+        android:background="@drawable/title_bar">
+        <Button
+            android:background="@drawable/title_btn_back" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:layout_marginLeft="10.0dip"
+            android:layout_centerVertical="true" 
+            android:onClick="BtnBack" />
+        
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="选择城市"
+            android:textSize="18sp"
             android:textColor="#ffffff"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-    </RelativeLayout>
+            android:text="选择城市"/>  
+  	</RelativeLayout>
 
     <LinearLayout
         android:id="@+id/choose_city_linearLayout"
@@ -69,7 +75,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/btn_style_green"
+        android:background="@drawable/btn_style_transparent"
         android:gravity="center"
         android:text="点击加载天气"
         android:textColor="#000000"
