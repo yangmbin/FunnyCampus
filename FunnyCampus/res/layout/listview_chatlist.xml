@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/listview_chatlist_rootRelativeLayout" >
+    
+    <RelativeLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:background="#eee">
+	    <RelativeLayout
+	        android:id="@+id/listview_chatlist_relativeLayout"
+	        android:layout_width="fill_parent"
+	        android:layout_height="45dp"
+	        android:layout_alignParentTop="true"
+	        android:background="@drawable/title_bar">
+	        
+	        <Button
+	            android:background="@drawable/title_btn_back" 
+	            android:layout_width="wrap_content" 
+	            android:layout_height="wrap_content" 
+	            android:layout_marginLeft="10.0dip"
+	            android:layout_centerVertical="true" 
+	            android:onClick="BtnBack" />
+	     
+	        <TextView
+	            android:id="@+id/listview_chatlist_friendname"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_centerInParent="true"
+	            android:textSize="18sp"
+	            android:textColor="#ffffff"
+	            android:text="..."/>
+	        <requestFocus />
+	    </RelativeLayout>
+	    
+	    <ListView
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:layout_marginBottom="60dp"
+	        android:fadingEdge="none"
+	        android:divider="#00bfbfbf"
+	        android:dividerHeight="0.00000009dp"
+	        android:headerDividersEnabled="false"
+	        android:footerDividersEnabled="false"
+	        android:smoothScrollbar="true"
+	        android:cacheColorHint="#00000000"
+	        android:fastScrollEnabled="false"
+	        android:layout_below="@+id/listview_chatlist_relativeLayout"
+	        android:id="@+id/listview_chatlist_listview" />
+	    
+	    <LinearLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="60dp"
+	        android:background="#dcdcdc"
+	        android:layout_alignParentBottom="true"
+	        android:layout_alignBottom="@+id/listview_chatlist_listview">
+	        <EditText 
+	            android:layout_width="fill_parent"
+	            android:layout_height="fill_parent"
+	            android:id="@+id/listview_chatlist_edittext"
+	            android:background="@drawable/search_bar_edit_normal"
+	            android:layout_weight="1"
+	            android:layout_margin="8dp"/>
+	        <Button
+	            android:layout_width="fill_parent"
+	            android:layout_height="fill_parent"
+	            android:layout_weight="4"
+	            android:background="@drawable/btn_style_transparent"
+	            android:text="发送"
+	            android:layout_marginRight="8dp"
+	            android:layout_marginTop="12dp"
+	            android:layout_marginBottom="12dp"
+	            android:onClick="sendChatMessageBtn"/>
+		</LinearLayout>
+	</RelativeLayout>
+
+</RelativeLayout>

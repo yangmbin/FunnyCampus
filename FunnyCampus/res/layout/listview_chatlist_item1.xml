@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#eee" >
+    
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="10dp" >
+        
+        <ImageView 
+        android:id="@+id/listview_chatlist_item1_headimg"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:background="@drawable/img_head"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"/>
+    
+	    <TextView 
+	        android:id="@+id/listview_chatlist_item1_content"
+	        android:layout_toRightOf="@+id/listview_chatlist_item1_headimg"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/chat_left"
+	        android:gravity="center_vertical"
+	        android:layout_marginTop="6dp"
+	        android:layout_marginBottom="6dp"
+	        android:layout_marginRight="80dp"
+	        android:paddingLeft="10dp"
+	        android:paddingRight="7dp"
+	        android:paddingTop="10dp"
+	        android:paddingBottom="10dp"
+	        android:textSize="16sp"
+	        android:textColor="#ff000000"
+	        android:text="福防打法飞"
+	        android:lineSpacingExtra="4dp"/>
+    </RelativeLayout>
+
+</RelativeLayout>

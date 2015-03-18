@@ -168,7 +168,7 @@ public class SchoolListViewAdapter extends BaseAdapter {
 			public void onClick(View arg0) {
 				LikeAndDislikeMSG dislikeMSG = new LikeAndDislikeMSG();
 				dislikeMSG.setFreshNewsID(Integer.parseInt((String) ((Map<String, Object>) getItem(position)).get("id")));
-				dislikeMSG.setUsername((String) ((Map<String, Object>) getItem(position)).get("username"));
+				dislikeMSG.setUsername((String) Utils.getInstance().getCurrentUserInfo().get("username"));
 				dislikeMSG.setLikeOrdislike("dislike");
 				dislikeMSG.setClickPosition(position);
 				
@@ -181,7 +181,7 @@ public class SchoolListViewAdapter extends BaseAdapter {
 			public void onClick(View arg0) {
 				LikeAndDislikeMSG likeMSG = new LikeAndDislikeMSG();
 				likeMSG.setFreshNewsID(Integer.parseInt((String) ((Map<String, Object>) getItem(position)).get("id")));
-				likeMSG.setUsername((String) ((Map<String, Object>) getItem(position)).get("username"));
+				likeMSG.setUsername((String) Utils.getInstance().getCurrentUserInfo().get("username"));
 				likeMSG.setLikeOrdislike("like");
 				likeMSG.setClickPosition(position);
 				

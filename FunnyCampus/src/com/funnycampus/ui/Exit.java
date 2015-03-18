@@ -48,6 +48,11 @@ public class Exit extends Activity {
     	
     	//关闭service，停止间歇性向服务器更新位置信息
     	stopService(new Intent("com.funnycampus.service.SendLocationInfoService"));
+    	
+    	//清空会话信息集合
+    	XMPPUtils.username2bitmap.clear();
+    	XMPPUtils.username2listItems.clear();
+    	XMPPUtils.username2nickname.clear();
     }  
 	
 }

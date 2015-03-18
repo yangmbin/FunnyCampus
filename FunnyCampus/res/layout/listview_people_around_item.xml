@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@drawable/btn_style_1" >
+    
+    <ImageView 
+        android:id="@+id/listview_people_around_item_headimg"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/youxi_logo"/>
+    
+    <TextView 
+        android:id="@+id/listview_people_around_item_username"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="#ff000000"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:text="帐号"
+        android:visibility="gone"/>
+    
+    <TextView 
+        android:id="@+id/listview_people_around_item_nickname"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="#ff000000"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="1dp"
+        android:text="昵称"
+        android:layout_weight="0.9"/>
+    
+    <TextView 
+        android:id="@+id/listview_people_around_item_distance"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:textSize="11sp"
+        android:textColor="#99000000"
+        android:text="15.5km"
+        android:layout_weight="2.1"/>
+
+</LinearLayout>

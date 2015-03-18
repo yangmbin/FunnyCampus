@@ -1,0 +1,46 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+   	<LinearLayout 
+   	    android:layout_width="fill_parent"
+   	    android:layout_height="60dp"
+   	    android:layout_centerInParent="true"
+   	    android:layout_marginLeft="20dp"
+   	    android:layout_marginRight="20dp"
+   	    android:background="#eee">
+   	    
+   	    <Button 
+   	        android:id="@+id/addfriend_and_chat_dialog_privatechat"
+   	        android:layout_width="fill_parent"
+   	        android:layout_height="40dp"
+   	        android:layout_weight="1"
+   	        android:layout_gravity="center_vertical"
+   	        android:text="私信"
+   	        android:textColor="#FF000000"
+   	        android:textSize="12sp"
+   	        android:layout_marginLeft="20dp"
+   	        android:layout_marginRight="5dp"
+   	        android:background="@drawable/btn_style_white1"
+   	        android:drawableLeft="@drawable/private_chat_left"
+   	        android:paddingLeft="20dp"
+   	        android:paddingRight="20dp"
+   	        android:onClick="privateChat" />
+   	    <Button 
+   	        android:id="@+id/addfriend_and_chat_dialog_addfriend"
+   	        android:layout_width="fill_parent"
+   	        android:layout_height="40dp"
+   	        android:layout_weight="1" 
+   	        android:layout_gravity="center_vertical"
+   	        android:text="添加"
+   	        android:textColor="#FFFFFFFF"
+   	        android:textSize="12sp"
+   	        android:layout_marginRight="20dp"
+   	        android:layout_marginLeft="5dp"
+   	        android:background="@drawable/btn_style_orange"
+   	        android:drawableLeft="@drawable/addfriend_left1"
+   	        android:paddingLeft="20dp"
+   	        android:paddingRight="20dp"
+   	        android:onClick="addFriend" />
+   	</LinearLayout>
+</RelativeLayout>

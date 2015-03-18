@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" 
+    android:background="#ffeeeeee" 
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent">
+    <LinearLayout 
+        android:gravity="center" 
+        android:id="@id/title" 
+        android:background="@drawable/title_bar" 
+        android:layout_width="fill_parent" 
+        android:layout_height="45.0dip">
+        <TextView 
+            android:textSize="18.0sp" 
+            android:textColor="#ff7f7f7f" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:text="资讯" />
+    </LinearLayout>
+    <GridView 
+        android:gravity="center" 
+        android:id="@+id/mysysu_gridview" 
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content" 
+        android:layout_marginLeft="10.0dip" 
+        android:layout_marginTop="10.0dip" 
+        android:layout_marginRight="10.0dip" 
+        android:horizontalSpacing="10.0dip" 
+        android:verticalSpacing="10.0dip" 
+        android:stretchMode="columnWidth" 
+        android:numColumns="3" />
+</LinearLayout>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="#eee" >
+    <ImageView 
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/youxi_logo"
+        android:id="@+id/listview_comments_item2_head_img"/>
+    
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="vertical">
+        <RelativeLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">    
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="#ff000000"
+                android:text="降幅可达"
+                android:id="@+id/listview_comments_item2_nickname"/>
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:textSize="10sp"
+                android:textColor="#88666666"
+                android:text="2015-01-65 20:32:21"
+                android:id="@+id/listview_comments_item2_time"/>
+        </RelativeLayout>      
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#cc666666"
+            android:layout_marginTop="5dp"
+            android:text="弗兰卡结算风卡精神负担"
+            android:id="@+id/listview_comments_item2_comment"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#eee" >
+    
+	<RelativeLayout 
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:layout_marginBottom="10dp">
+	    
+	    <ImageView 
+	        android:id="@+id/listview_chatlist_item2_headimg"
+	        android:layout_width="45dp"
+	        android:layout_height="45dp"
+	        android:background="@drawable/img_head"
+	        android:layout_marginLeft="5dp"
+	        android:layout_marginRight="10dp"
+	        android:layout_marginTop="10dp"
+	        android:layout_marginBottom="10dp"
+	        android:layout_alignParentRight="true"/>
+    
+	    <TextView 
+	        android:id="@+id/listview_chatlist_item2_content"
+	        android:layout_toLeftOf="@+id/listview_chatlist_item2_headimg"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/chat_right"
+	        android:gravity="center_vertical"
+	        android:layout_marginTop="6dp"
+	        android:layout_marginBottom="6dp"
+	        android:layout_marginLeft="80dp"
+	        android:paddingLeft="7dp"
+	        android:paddingRight="10dp"
+	        android:paddingTop="10dp"
+	        android:paddingBottom="10dp"
+	        android:textSize="16sp"
+	        android:textColor="#ff000000"
+	        android:text="福防守梵蒂冈豆腐干豆腐干豆腐干豆腐干豆腐干豆腐干豆腐干地方古典风格大概打法飞"
+	        android:lineSpacingExtra="4dp"/>
+		</RelativeLayout>    
+
+</RelativeLayout>

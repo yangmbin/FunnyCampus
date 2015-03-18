@@ -578,7 +578,8 @@ public class MyThread implements Runnable {
 			 * 点赞和踩的消息
 			 */
 			else if (obj instanceof LikeAndDislikeMSG) {
-				System.out.println("服务器接收到消息：" + ((LikeAndDislikeMSG)obj).getLikeORdislike());
+				System.out.println("服务器接收到消息：" + ((LikeAndDislikeMSG)obj).getLikeORdislike() + ":" + 
+						((LikeAndDislikeMSG)obj).getUsername());
 				int id = ((LikeAndDislikeMSG)obj).getFreshNewsID();
 				String username = ((LikeAndDislikeMSG)obj).getUsername();
 				String str = ((LikeAndDislikeMSG)obj).getLikeORdislike();
